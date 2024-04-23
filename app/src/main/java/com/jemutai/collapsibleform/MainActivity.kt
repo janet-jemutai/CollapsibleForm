@@ -35,6 +35,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.refugee_onboarding.refugee.PersonalAddressForm
+import com.example.refugee_onboarding.refugee.PersonalDetailsForm
 import com.jemutai.collapsibleform.ui.theme.CollapsibleFormTheme
 
 class MainActivity : ComponentActivity() {
@@ -60,40 +62,36 @@ fun PersonalDetailsSection() {
     var isVisiblePersonalDetails by remember { mutableStateOf(false) }
     var isVisiblePersonalAddress by remember { mutableStateOf(false) }
 
-    Surface(
+    Column(
         modifier = Modifier
             .fillMaxWidth()
-            .clip(shape = RoundedCornerShape(10.dp))
-            .background(color = Color.White)
+            .padding(horizontal = 16.dp)
     ) {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 16.dp)
+        // Personal Details Section
+        PersonalDetailsCollapsibleSection(isVisible = isVisiblePersonalDetails) {
+            isVisiblePersonalDetails = it
+        }
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        // Personal Address Section
+        PersonalAddressCollapsibleSection(
+            isVisible = isVisiblePersonalAddress,
+            modifier = Modifier.padding(top = 16.dp)
         ) {
-            // Personal Details Section
-            PersonalDetailsCollapsibleSection(isVisible = isVisiblePersonalDetails) {
-                isVisiblePersonalDetails = it
-            }
-
-            Spacer(modifier = Modifier.height(16.dp))
-
-            // Personal Address Section
-            PersonalAddressCollapsibleSection(
-                isVisible = isVisiblePersonalAddress,
-                modifier = Modifier.padding(top = 16.dp)
-            ) {
-                isVisiblePersonalAddress = it
-            }
+            isVisiblePersonalAddress = it
         }
     }
 }
+
 
 @Composable
 fun PersonalDetailsCollapsibleSection(
     isVisible: Boolean,
     onToggleVisibility: (Boolean) -> Unit
-) {
+)
+
+{
     var iconState by remember { mutableStateOf(Icons.Rounded.KeyboardArrowDown) }
 
     Row(
@@ -113,14 +111,14 @@ fun PersonalDetailsCollapsibleSection(
                         Icons.Rounded.KeyboardArrowDown
                     }
                 }
-                .background(Color.Red),
+                .background(color = Color.Red),
             contentAlignment = Alignment.Center
         ) {
             Text(
                 text = "Beneficiary Personal Details",
                 fontSize = 20.sp,
                 fontWeight = FontWeight.Bold,
-                color = MaterialTheme.colorScheme.primary
+                color = Color.White
             )
 
             Icon(
@@ -162,14 +160,14 @@ fun PersonalAddressCollapsibleSection(
                         Icons.Rounded.KeyboardArrowDown
                     }
                 }
-                .background(Color.Green),
+                .background(color = Color.Red),
             contentAlignment = Alignment.Center
         ) {
             Text(
                 text = "Personal Address",
                 fontSize = 20.sp,
                 fontWeight = FontWeight.Bold,
-                color = MaterialTheme.colorScheme.primary
+                color = Color.White
             )
 
             Icon(
@@ -185,4 +183,5 @@ fun PersonalAddressCollapsibleSection(
         PersonalAddressForm()
     }
 }
+
 
